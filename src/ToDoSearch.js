@@ -1,9 +1,12 @@
 import React from 'react';
-//import './ToDoSearch.css';
+import './ToDoSearch.css';
 
 function ToDoSearch() {
   return (
-    <input className="TodoSearch" placeholder="Cebolla" />
+    <div className="ToDoSearch-container">
+      <input className="ToDoSearch" placeholder="Enter your tasks" />
+    </div>
+    
   );
 }
 

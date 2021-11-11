@@ -8,7 +8,7 @@ import { CreateToDoButton } from './CreateToDoButton';
 
 
 const ToDos = [
-  {text:'Cortar cebolla', completed:false},
+  {text:'Cortar cebolla', completed:true},
   {text:'Jugar Valorant', completed:false},
   {text:'Terminar React', completed:false},
 ];
@@ -21,7 +21,11 @@ function App() {
 
        <ToDoList>
         {ToDos.map(ToDo=>(
-          <ToDoItem key={ToDo.text}  text={ToDo.text} />
+          <ToDoItem 
+            key={ToDo.text}  
+            text={ToDo.text}
+            completed={ToDo.completed}
+            />
         ))}
       </ToDoList>
 
