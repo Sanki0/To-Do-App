@@ -3,11 +3,13 @@ import './ToDoList.css'
 
 function ToDoList(props) {
   return (
-    <section>
-      <ul>
-        {props.children}
-      </ul>
-    </section>
+    <>
+      <section>
+        <ul>
+          {props.children}
+        </ul>
+      </section>
+    </>
   );
 }
 

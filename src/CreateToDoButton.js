@@ -8,12 +8,14 @@ function CreateToDoButton(props) {
 
 
   return (
-    <button 
-      className="CreateToDoButton"
-      onClick={()=>onClickButton('aqui sale el mensaje enviado')}
-    >
-      +
-    </button>
+    <>
+      <button 
+        className="CreateToDoButton"
+        onClick={()=>onClickButton('aqui sale el mensaje enviado')}
+      >
+        +
+      </button>
+    </>
   );
 }
 
