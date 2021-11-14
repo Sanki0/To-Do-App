@@ -18,9 +18,6 @@ function ToDoSearch({searchValue,setSearchValue}) {
         value={searchValue}
         onChange={onSearchValueChange}
       />
-      <p>
-        {searchValue}
-      </p>
     </div>
     </>
   );
