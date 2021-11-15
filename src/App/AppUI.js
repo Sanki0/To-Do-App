@@ -5,7 +5,7 @@ import { ToDoItem } from '../ToDoItem/ToDoItem';
 import { ToDoList } from '../ToDolist/ToDoList';
 import { ToDoSearch } from '../ToDoSearch/ToDoSearch';
 import { CreateToDoButton } from '../CreateToDoButton/CreateToDoButton';
-
+import {Modal} from '../Modal/Modal'
 
 function AppUI(){
   const {
@@ -14,6 +14,8 @@ function AppUI(){
     searchedToDos,
     completeToDo,
     deleteToDo,
+    openModal,
+    setOpenModal
   }=React.useContext(ToDoContext);
 
   return (
@@ -36,9 +38,15 @@ function AppUI(){
         ))}
       </ToDoList>
 
+      {!!openModal &&(
+        <Modal>
+          <p>Teletransportcaionn</p>
+        </Modal>
+      )}
 
-
-      <CreateToDoButton/>
+      <CreateToDoButton
+        setOpenModal={setOpenModal}
+      />
     </>
 
   );
