@@ -8,32 +8,59 @@ import { AppUI } from './AppUI';
 //   {text:'Terminar React', completed:false},
 // ];
 function useLocalStorage(itemName, initialValue) {
-  const localStorageItem = localStorage.getItem(itemName);
-  let parsedItem;
+  const [loading,setLoading]=React.useState(true);
+  const [error,setError]=React.useState(false);
+  const [item, setItem] = React.useState(initialValue);
+    
+  React.useEffect(()=>{
+    setTimeout(()=>{
+      try{
+        const localStorageItem = localStorage.getItem(itemName);
+        let parsedItem;
 
-  if (!localStorageItem) {
-    localStorage.setItem(itemName, JSON.stringify(initialValue));
-    parsedItem = initialValue;
-  } else {
-    parsedItem = JSON.parse(localStorageItem);
-  }
-  const [item, setItem] = React.useState(parsedItem);
+        if (!localStorageItem) {
+          localStorage.setItem(itemName, JSON.stringify(initialValue));
+          parsedItem = initialValue;
+        } 
+        else {
+          parsedItem = JSON.parse(localStorageItem);
+        }
+
+        setItem(parsedItem);
+        setLoading(false);
+      }
+      catch(error){
+        setError(error);
+      }
+    },1000);
+  });
+
 
   const saveItem = (newItem) => {
-    const stringifiedItem = JSON.stringify(newItem);
-    localStorage.setItem(itemName, stringifiedItem);
-    setItem(newItem);
+    try{
+      const stringifiedItem = JSON.stringify(newItem);
+      localStorage.setItem(itemName, stringifiedItem);
+      setItem(newItem);
+    }
+    catch(error){
+      setError(error);
+    }
   };
 
-  return [
+  return {
     item,
     saveItem,
-  ];
+    loading,
+    error,
+  };
 }
 
 function App() {
-  
-  const [ToDos,setToDos]=useLocalStorage('TODOS_V1', []);
+  const {item:ToDos,
+    saveItem:saveToDos,
+    loading,
+    error
+  }=useLocalStorage('TODOS_V1', []);
   const [searchValue,setSearchValue]=React.useState('');
 
   const completedToDos=ToDos.filter(ToDo=>!!ToDo.completed).length;
@@ -52,12 +79,6 @@ function App() {
     })
   }
 
-  const saveToDos=(newToDos)=>{
-    const stringifiedToDos=JSON.stringify(newToDos);
-    localStorage.setItem('ToDos_V1',stringifiedToDos);
-    setToDos(newToDos);
-  }
-
   const completeToDo=(text)=>{
     const ToDoIndex=ToDos.findIndex(ToDo=>ToDo.text===text);
     const newToDos=[...ToDos];
@@ -72,8 +93,16 @@ function App() {
     saveToDos(newToDos);
   }
 
+  // console.log('Render (antes del use effect)');
+  // React.useEffect(()=>{
+  //   console.log('use effect');
+  // }, [totalToDos]);
+  // console.log('Render (despues del use effect)');
+
   return (
     <AppUI
+      loading={loading}
+      error={error}
       totalToDos={totalToDos}
       completedToDos={completedToDos}
       searchValue={searchValue}
