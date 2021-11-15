@@ -30,6 +30,15 @@ function ToDoProvider(props) {
     })
   }
 
+  const addToDo=(text)=>{
+    const newToDos=[...ToDos];
+    newToDos.push({
+      completed:false,
+      text,
+    });
+    saveToDos(newToDos);
+  }
+  
   const completeToDo=(text)=>{
     const ToDoIndex=ToDos.findIndex(ToDo=>ToDo.text===text);
     const newToDos=[...ToDos];
@@ -46,7 +55,6 @@ function ToDoProvider(props) {
 
   return (
     <ToDoContext.Provider value={{
-      
       loading,
       error,
       totalToDos,
@@ -57,7 +65,8 @@ function ToDoProvider(props) {
       completeToDo,
       deleteToDo,
       openModal,
-      setOpenModal
+      setOpenModal,
+      addToDo
     }}>
       {props.children}
     </ToDoContext.Provider>
